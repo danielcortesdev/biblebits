@@ -11,7 +11,7 @@ function App() {
   };
 
   // TODO:
-  // 2. share flex wrap
+  // 2. Horizontal screen separation
   // 3. Language clarification
   // 4. Share links
 
