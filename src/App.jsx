@@ -10,6 +10,11 @@ function App() {
     KJV: "de4e12af7f28f599-01",
   };
 
+  // TODO:
+  // 2. share flex wrap
+  // 3. Language clarification
+  // 4. Share links
+
   const [bible, setBible] = React.useState({
     id: bibleVersions.KJV,
     bookId: "",
