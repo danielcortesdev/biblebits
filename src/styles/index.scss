@@ -1,0 +1,65 @@
+@import "variables";
+@import "mixins";
+
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  height: 100vh;
+  padding: 0 24px;
+
+  /* Flex */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#quote-box {
+  height: 100%;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @include fade-animation;
+
+  #text {
+    font-size: 24px;
+    text-align: center;
+    span {
+      font-size: 40px;
+      font-weight: 700;
+    }
+  }
+
+  #author {
+    margin-top: 16px;
+    font-size: 16px;
+    text-align: right;
+  }
+
+  #button-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+
+    #new-quote,
+    #share-quote {
+      @include button-style;
+    }
+  }
+}
+
+#share-quote {
+  text-decoration: none;
+  margin-right: 16px;
+
+  img {
+    height: 16px;
+    width: 16px;
+  }
+}

@@ -1,0 +1,19 @@
+@import "variables";
+
+@font-face {
+  font-family: $font-family;
+  font-weight: 700;
+  src: url("../assets/fonts/notoserif-bold-webfont.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: $font-family;
+  font-weight: 400;
+  src: url("../assets/fonts/notoserif-regular-webfont.woff2") format("woff2");
+}
+
+#root {
+  font-family: $font-family;
+  color: $text_color;
+  font-size: 18px;
+}
