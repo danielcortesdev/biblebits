@@ -12,7 +12,7 @@ import emailIcon from "/email.svg";
 import whatsappIcon from "/whatsapp.svg";
 import downloadIcon from "/download.svg";
 
-const url = "https:///biblebits.com"
+const url = window.location.href;
 
 function ShareModal(props) {
   const [wasCopied, setWasCopied] = React.useState(false);
