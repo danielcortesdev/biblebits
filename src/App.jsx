@@ -10,14 +10,8 @@ function App() {
     KJV: "de4e12af7f28f599-01",
   };
 
-  // TODO:
-  // 1. TEST
-  // 2. Hide env variables
-  // 3. Language clarification
-  // 4. Share links
-
   const [bible, setBible] = React.useState({
-    id: bibleVersions.KJV,
+    id: bibleVersions.RV1909,
     bookId: "",
     chapterId: "",
     verseId: "",
@@ -162,7 +156,7 @@ function App() {
 
   return (
     <>
-      <Header changeBibleVersion={changeBibleVersion} />
+      <Header changeBibleVersion={changeBibleVersion} bibleVersion={bible.id} bibleVersions={bibleVersions}/>
       {!isFetchingBooks ? (
         <div id="quote-box">
           <div id="canvas">
