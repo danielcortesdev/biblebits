@@ -11,7 +11,7 @@ function App() {
   };
 
   // TODO:
-  // 2. Horizontal screen separation
+  // 2. Hide env variables
   // 3. Language clarification
   // 4. Share links
 
@@ -161,7 +161,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header changeBibleVersion={changeBibleVersion} />
       {!isFetchingBooks ? (
         <div id="quote-box">
           <div id="canvas">
@@ -202,12 +202,7 @@ function App() {
         handleModal={handleModal}
         modalIsOpen={modalIsOpen}
       />
-      {!isFetchingBooks ? (
-        <Footer
-          text={bible.copyright}
-          changeBibleVersion={changeBibleVersion}
-        />
-      ) : null}
+      {!isFetchingBooks ? <Footer text={bible.copyright} /> : null}
     </>
   );
 }

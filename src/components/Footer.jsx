@@ -4,11 +4,6 @@ import languageIcon from "/language.svg";
 function Footer(props) {
   return (
     <footer>
-      <img
-        src={languageIcon}
-        alt="language icon"
-        onClick={props.changeBibleVersion}
-      />
       <p>© {props.text}</p>
     </footer>
   );
