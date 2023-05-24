@@ -11,6 +11,7 @@ function App() {
   };
 
   // TODO:
+  // 1. TEST
   // 2. Hide env variables
   // 3. Language clarification
   // 4. Share links
