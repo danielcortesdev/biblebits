@@ -49,21 +49,6 @@ body {
     display: flex;
     justify-content: center;
     margin-top: 32px;
-
-    #new-quote,
-    #share-quote {
-      @include button-style;
-    }
-  }
-}
-
-#share-quote {
-  text-decoration: none;
-  margin-right: 16px;
-
-  img {
-    height: 16px;
-    width: 16px;
   }
 }
 

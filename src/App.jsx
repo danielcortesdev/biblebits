@@ -3,6 +3,7 @@ import shareIcon from "/share.svg";
 import ShareModal from "./components/ShareModal";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Button from "./components/Button";
 
 function App() {
   const bibleVersions = {
@@ -98,15 +99,15 @@ function App() {
 
   // Set is fetching verse to false when verse is fetched
   React.useEffect(() => {
-    setIsFetchingVerse(false)
+    setIsFetchingVerse(false);
   }, [bible.verse]);
 
   // Fade in and out the quote box controlled by isFetchingVerse
   React.useEffect(() => {
     const quoteBox = document.getElementById("quote-box");
-    isFetchingVerse 
-    ? quoteBox.classList.add("fade")
-    : quoteBox.classList.remove("fade");
+    isFetchingVerse
+      ? quoteBox.classList.add("fade")
+      : quoteBox.classList.remove("fade");
   }, [isFetchingVerse]);
 
   function changeVerse() {
@@ -180,14 +181,19 @@ function App() {
           </div>
           {bible.verse ? (
             <div id="button-box">
-              <button id="share-quote" onClick={handleModal}>
-                <img src={shareIcon} alt="twitter logo" />
-              </button>
-              <button id="new-quote" onClick={changeVerse}>
-                {bible.id === bibleVersions.KJV
-                  ? "New verse"
-                  : "Nuevo versículo"}
-              </button>
+              <Button  
+                onClick={handleModal}
+                icon={"share-icon"}
+              />
+              <Button
+                text={
+                  bible.id === bibleVersions.KJV
+                    ? "New verse"
+                    : "Nuevo versículo"
+                }
+                
+                onClick={changeVerse}
+              />
             </div>
           ) : null}
         </div>
