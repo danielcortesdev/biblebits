@@ -22,6 +22,7 @@ function App() {
   const [books, setBooks] = React.useState([]);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [isFetchingBooks, setIsFetchingBooks] = React.useState(false);
+  const [isFetchingVerse, setIsFetchingVerse] = React.useState(false);
 
   const fetchOptions = {
     method: "GET",
@@ -95,16 +96,22 @@ function App() {
     }
   }, [bible.verseId]);
 
+  // Set is fetching verse to false when verse is fetched
+  React.useEffect(() => {
+    setIsFetchingVerse(false)
+  }, [bible.verse]);
+
+  // Fade in and out the quote box controlled by isFetchingVerse
+  React.useEffect(() => {
+    const quoteBox = document.getElementById("quote-box");
+    isFetchingVerse 
+    ? quoteBox.classList.add("fade")
+    : quoteBox.classList.remove("fade");
+  }, [isFetchingVerse]);
+
   function changeVerse() {
     setRandomContent(books, "bookId");
-
-    // Fade animation, CSS 0.5s, Timeout 1s
-    const quoteBox = document.getElementById("quote-box");
-    quoteBox.classList.add("fade");
-    setTimeout(() => {
-      quoteBox.classList.remove("fade");
-      clearInterval();
-    }, 1500);
+    setIsFetchingVerse(true);
   }
 
   function changeBibleVersion() {
@@ -156,7 +163,11 @@ function App() {
 
   return (
     <>
-      <Header changeBibleVersion={changeBibleVersion} bibleVersion={bible.id} bibleVersions={bibleVersions}/>
+      <Header
+        changeBibleVersion={changeBibleVersion}
+        bibleVersion={bible.id}
+        bibleVersions={bibleVersions}
+      />
       {!isFetchingBooks ? (
         <div id="quote-box">
           <div id="canvas">
