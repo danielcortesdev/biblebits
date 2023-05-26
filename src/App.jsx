@@ -4,8 +4,10 @@ import ShareModal from "./components/ShareModal";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Button from "./components/Button";
+import SelectedTextMenu from "./components/SelectedTextMenu";
 
 function App() {
+  // Bible states
   const bibleVersions = {
     RV1909: "592420522e16049f-01",
     KJV: "de4e12af7f28f599-01",
@@ -21,10 +23,8 @@ function App() {
     copyright: "",
   });
   const [books, setBooks] = React.useState([]);
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [isFetchingBooks, setIsFetchingBooks] = React.useState(false);
   const [isFetchingVerse, setIsFetchingVerse] = React.useState(false);
-
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -32,7 +32,7 @@ function App() {
       "api-key": import.meta.env.VITE_API_KEY,
     },
   };
-
+  const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const urls = {
     bibles: "https://api.scripture.api.bible/v1/bibles",
     books: `https://api.scripture.api.bible/v1/bibles/${bible.id}/books`,
@@ -40,6 +40,14 @@ function App() {
     verses: `https://api.scripture.api.bible/v1/bibles/${bible.id}/chapters/${bible.chapterId}/verses`,
     verse: `https://api.scripture.api.bible/v1/bibles/${bible.id}/verses/${bible.verseId}`,
   };
+
+  // Higlihted text states
+  const [highlightedText, setHighlightedText] = React.useState("");
+  const [mouseCoordinates, setMouseCoordinates] = React.useState({
+    clientX: 0,
+    clientY: 0,
+  });
+  const [subMenuisOpen, setSubMenuisOpen] = React.useState(false);
 
   // Fetch the list of books and set a random book
   React.useEffect(() => {
@@ -162,8 +170,61 @@ function App() {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  // Highlighted text functions
+  function getSelectionIndices() {
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const start = range.startOffset;
+    const end = range.endOffset;
+    return { start, end, length };
+  }
+
+  function handleHighlight(event) {
+    const selection = window.getSelection().toString();
+    if (selection.length > 0) {
+      // Get the mouse coordinates
+      const { clientX, clientY } = getMouserCoordinates();
+      setMouseCoordinates({ clientX, clientY });
+
+      // Get the selection indices
+      const { start, end } = getSelectionIndices();
+      const updatedText = (
+        <React.Fragment>
+          {bible.verse.slice(0, start)}
+          <span className={`highlighted`}>{bible.verse.slice(start, end)}</span>
+          {bible.verse.slice(end)}
+        </React.Fragment>
+      );
+      setHighlightedText(updatedText);
+    }
+  }
+
+  function getMouserCoordinates() {
+    const { clientX, clientY } = event;
+    return { clientX, clientY };
+  }
+
+  function handleColorChange(color) {
+    const highlightedTextElement = document.querySelector(".highlighted");
+    const colorClasses = [
+      "highlight-color-1",
+      "highlight-color-2",
+      "highlight-color-3",
+      "highlight-color-4",
+      "highlight-color-5",
+    ];
+    highlightedTextElement.classList.remove(...colorClasses);
+    highlightedTextElement.classList.add(color);
+    setSubMenuisOpen(false);
+  }
+
+  // Open submenu when there is a highlight
+  React.useEffect(() => {
+    highlightedText != "" ? setSubMenuisOpen(true) : setSubMenuisOpen(false);
+  }, [highlightedText]);
+
   return (
-    <>
+    <div id="main">
       <Header
         changeBibleVersion={changeBibleVersion}
         bibleVersion={bible.id}
@@ -171,27 +232,27 @@ function App() {
       />
       {!isFetchingBooks ? (
         <div id="quote-box">
-          <div id="canvas">
+          <div
+            id="canvas"
+            onMouseDown={() => setHighlightedText("")}
+            onMouseUp={handleHighlight}
+          >
+            {bible.verse ? <span>"</span> : null}
             <p id="text">
-              {bible.verse ? <span>"</span> : null}
-              {bible.verse ? bible.verse : null}
+              {highlightedText != "" ? highlightedText : bible.verse}
             </p>
 
             <p id="author">{bible.reference}</p>
           </div>
           {bible.verse ? (
             <div id="button-box">
-              <Button  
-                onClick={handleModal}
-                icon={"share-icon"}
-              />
+              <Button onClick={handleModal} icon={"share-icon"} />
               <Button
                 text={
                   bible.id === bibleVersions.KJV
                     ? "New verse"
                     : "Nuevo versículo"
                 }
-                
                 onClick={changeVerse}
               />
             </div>
@@ -214,8 +275,15 @@ function App() {
         handleModal={handleModal}
         modalIsOpen={modalIsOpen}
       />
+      {subMenuisOpen && (
+        <SelectedTextMenu
+          clientX={mouseCoordinates.clientX}
+          clientY={mouseCoordinates.clientY}
+          handleColorChange={handleColorChange}
+        />
+      )}
       {!isFetchingBooks ? <Footer text={bible.copyright} /> : null}
-    </>
+    </div>
   );
 }
 export default App;
