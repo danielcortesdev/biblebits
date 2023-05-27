@@ -236,7 +236,6 @@ function App() {
             id="canvas"
             onMouseDown={() => setHighlightedText("")}
             onMouseUp={handleHighlight}
-            onTouchEnd={handleHighlight}
           >
             {bible.verse ? <span className="quote-char">"</span> : null}
             <div id="text">
