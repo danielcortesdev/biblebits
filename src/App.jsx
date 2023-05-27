@@ -1,5 +1,4 @@
 import React from "react";
-import shareIcon from "/share.svg";
 import ShareModal from "./components/ShareModal";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -121,6 +120,7 @@ function App() {
   function changeVerse() {
     setRandomContent(books, "bookId");
     setIsFetchingVerse(true);
+    setHighlightedText("");
   }
 
   function changeBibleVersion() {
@@ -236,11 +236,12 @@ function App() {
             id="canvas"
             onMouseDown={() => setHighlightedText("")}
             onMouseUp={handleHighlight}
+            onTouchEnd={handleHighlight}
           >
-            {bible.verse ? <span>"</span> : null}
-            <p id="text">
+            {bible.verse ? <span className="quote-char">"</span> : null}
+            <div id="text">
               {highlightedText != "" ? highlightedText : bible.verse}
-            </p>
+            </div>
 
             <p id="author">{bible.reference}</p>
           </div>

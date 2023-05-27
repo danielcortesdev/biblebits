@@ -11,7 +11,7 @@ body {
 }
 
 ::selection {
-  background-color: rgb(222,223,222);
+  background-color: rgb(222, 223, 222);
 }
 
 #main {
@@ -37,10 +37,6 @@ body {
   #text {
     font-size: 24px;
     text-align: center;
-    &:span {
-      font-size: 40px;
-      font-weight: 700;
-    }
   }
 
   #author {
@@ -56,13 +52,25 @@ body {
   }
 }
 
+.quote-char {
+  font-size: 42px;
+  font-weight: bold;
+  position: relative;
+  top: 12%;
+  left: -3%
+}
+
 .highlighted {
-  background-color: rgb(222,223,222);
+  background-color: rgb(222, 223, 222);
   color: #19171c;
+  padding: 0;
+  margin: 0;
+  font-style: 32;
 }
 
 .highlight-color-1 {
   background-color: rgb(244, 246, 186);
+  
 }
 
 .highlight-color-2 {

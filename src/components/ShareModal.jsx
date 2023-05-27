@@ -31,13 +31,41 @@ function ShareModal(props) {
 
   function downloadScreenshot() {
     const options = {
-      bakcgroundColor: "#F5F5F5",
+      backgroundColor: "#F5F5F5",
       onclone: (clone) => {
         const canvas = clone.getElementById("canvas");
         canvas.style.padding = "24px";
         canvas.style.borderRadius = "16px";
+
+        const verse = canvas.children[1];
+        const [textBefore, span, textAfter] = Array.from(verse.childNodes);
+
+        if (
+          span &&
+          span.nodeType === Node.ELEMENT_NODE &&
+          span.tagName === "SPAN"
+        ) {
+          const pBeforeSpan = document.createElement("p");
+          pBeforeSpan.textContent = textBefore ? textBefore.textContent : "";
+
+          const pAfterSpan = document.createElement("p");
+          pAfterSpan.textContent = textAfter ? textAfter.textContent : "";
+
+          const spanToParagraph = document.createElement("p");
+          Array.from(span.attributes).forEach((attr) => {
+            spanToParagraph.setAttribute(attr.name, attr.value);
+          });
+          spanToParagraph.textContent = span.textContent;
+
+          verse.innerHTML = "";
+          verse.appendChild(pBeforeSpan);
+          verse.appendChild(spanToParagraph);
+          verse.appendChild(pAfterSpan);
+          verse.style.display = "inline-block";
+        }
       },
     };
+
     html2canvas(document.querySelector("#canvas"), options).then((canvas) => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
@@ -56,9 +84,7 @@ function ShareModal(props) {
       <div
         className={props.modalIsOpen ? "share-modal open-modal" : "share-modal"}
       >
-        <p className={wasCopied ? "url copied" : "url"}>
-          {url}
-        </p>
+        <p className={wasCopied ? "url copied" : "url"}>{url}</p>
         <div id="options-box">
           <div className="share-option" onClick={copyToClipboard}>
             <img src={copyIcon} alt="Copy icon" />
