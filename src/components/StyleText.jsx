@@ -47,9 +47,11 @@ function StyleText(props) {
 
     window.addEventListener("mousedown", windowCloseMenu);
     textElement.addEventListener("mouseup", handleTextSelection);
+    textElement.addEventListener("touchend", ()=>handleTextSelection)
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
       textElement.removeEventListener("mouseup", handleTextSelection);
+      textElement.removeEventListener("touchend", handleTextSelection)
     };
   }, []);
 
