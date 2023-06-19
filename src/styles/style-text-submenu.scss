@@ -1,0 +1,46 @@
+@import "mixins";
+
+// Highlight submenu options
+.highlight-option-1 {
+  @include menu-option(hsl(62, 77%, 85%), hsl(62, 62%, 85%), "", "", 5%);
+}
+.highlight-option-2 {
+  @include menu-option(hsl(251, 75%, 89%), hsl(251, 60%, 89%), "", "", 3%);
+}
+.highlight-option-3 {
+  @include menu-option(hsl(317, 93%, 94%), hsl(317, 78%, 94%), "", "", 2%);
+}
+.highlight-option-4 {
+  @include menu-option(hsl(202, 76%, 80%), hsl(202, 61%, 80%), "", "", 10%);
+}
+.highlight-option-5 {
+  @include menu-option(hsl(5, 85%, 76%), hsl(5, 70%, 76%), "", "", 10%);
+}
+
+// Highlight colors
+.color-option-1 {
+  @include color-option(rgb(244, 246, 186));
+}
+.color-option-2 {
+  @include color-option(rgb(214, 206, 248));
+}
+.color-option-3 {
+  @include color-option(rgb(254, 226, 246));
+}
+.color-option-4 {
+  @include color-option(rgb(167, 215, 243));
+}
+.color-option-5 {
+  @include color-option(rgb(246, 150, 141));
+}
+
+// Font styles
+.font-style-italic {
+  font-style: italic;
+}
+.font-style-bold {
+  font-weight: bold;
+}
+.font-style-underline {
+  text-decoration: underline;
+}

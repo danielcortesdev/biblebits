@@ -37,6 +37,12 @@ body {
   #text {
     font-size: 24px;
     text-align: center;
+    &::before {
+      content: '"';
+      font-size: 42px;
+      font-weight: bold;
+      font-family: $font-family;
+    }
   }
 
   #author {
@@ -52,42 +58,6 @@ body {
   }
 }
 
-.quote-char {
-  font-size: 42px;
-  font-weight: bold;
-  position: relative;
-  top: 12%;
-  left: -3%
-}
-
-.highlighted {
-  background-color: rgb(222, 223, 222);
-  color: #19171c;
-  padding: 0;
-  margin: 0;
-  font-style: 32;
-}
-
-.highlight-color-1 {
-  background-color: rgb(244, 246, 186);
-  
-}
-
-.highlight-color-2 {
-  background-color: rgb(214, 206, 248);
-}
-
-.highlight-color-3 {
-  background-color: rgb(254, 226, 246);
-}
-
-.highlight-color-4 {
-  background-color: rgb(167, 215, 243);
-}
-
-.highlight-color-5 {
-  background-color: rgb(246, 150, 141);
-}
 @media screen and (max-width: 767px) and (orientation: landscape) {
   #text {
     font-size: 18px !important;

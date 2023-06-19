@@ -16,7 +16,6 @@ const url = window.location.href;
 
 function ShareModal(props) {
   const [wasCopied, setWasCopied] = React.useState(false);
-
   async function copyToClipboard() {
     try {
       await navigator.clipboard.writeText(url);
@@ -29,7 +28,7 @@ function ShareModal(props) {
     }
   }
 
-  function downloadScreenshot() {
+  function downloadScreenshot2() {
     const options = {
       backgroundColor: "#F5F5F5",
       onclone: (clone) => {
@@ -70,6 +69,22 @@ function ShareModal(props) {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png");
       link.download = props.reference;
+      link.click();
+    });
+  }
+
+  function downloadScreenshot() {
+    const options = {
+      backgroundColor: "#F5F5F5",
+      onclone: (clone) => {
+        const canvasClone = clone.getElementById("canvas");
+        canvasClone.style.padding = "24px";
+      }
+    }
+    html2canvas(document.getElementById("canvas"), options).then((canvas) => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png"); // File type
+      link.download = props.reference; // File name
       link.click();
     });
   }

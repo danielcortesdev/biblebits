@@ -14,7 +14,7 @@ function Header(props) {
           {
           props.bibleVersion == props.bibleVersions.KJV 
           ? "Español"
-          : "Inglés"
+          : "English"
       } </p>
         <img
           src={languageIcon}

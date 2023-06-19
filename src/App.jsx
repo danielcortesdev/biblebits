@@ -3,7 +3,7 @@ import ShareModal from "./components/ShareModal";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Button from "./components/Button";
-import SelectedTextMenu from "./components/SelectedTextMenu";
+import StyleText from "./components/StyleText";
 
 function App() {
   // Bible states
@@ -11,7 +11,6 @@ function App() {
     RV1909: "592420522e16049f-01",
     KJV: "de4e12af7f28f599-01",
   };
-
   const [bible, setBible] = React.useState({
     id: bibleVersions.RV1909,
     bookId: "",
@@ -31,7 +30,9 @@ function App() {
       "api-key": import.meta.env.VITE_API_KEY,
     },
   };
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [shareModalIsOpen, setModalIsOpen] = React.useState(false);
+  const verseRef = React.useRef(null);
+
   const urls = {
     bibles: "https://api.scripture.api.bible/v1/bibles",
     books: `https://api.scripture.api.bible/v1/bibles/${bible.id}/books`,
@@ -39,14 +40,6 @@ function App() {
     verses: `https://api.scripture.api.bible/v1/bibles/${bible.id}/chapters/${bible.chapterId}/verses`,
     verse: `https://api.scripture.api.bible/v1/bibles/${bible.id}/verses/${bible.verseId}`,
   };
-
-  // Higlihted text states
-  const [highlightedText, setHighlightedText] = React.useState("");
-  const [mouseCoordinates, setMouseCoordinates] = React.useState({
-    clientX: 0,
-    clientY: 0,
-  });
-  const [subMenuisOpen, setSubMenuisOpen] = React.useState(false);
 
   // Fetch the list of books and set a random book
   React.useEffect(() => {
@@ -58,7 +51,7 @@ function App() {
         setRandomContent(books, "bookId");
       }
       fetchBooks();
-    } else setIsOnline(false);
+    }
   }, [bible.id]);
 
   // Fetch the list of chapters of a book and set a random chapter
@@ -93,7 +86,11 @@ function App() {
         setBible((prevBible) => {
           return {
             ...prevBible,
-            verse: cleanVerse,
+            verse: cleanVerse.split("").map((char, charIndex) => (
+              <span id={charIndex} key={charIndex}>
+                {char}
+              </span>
+            )),
             reference: verse.reference,
             copyright: verse.copyright,
           };
@@ -106,21 +103,29 @@ function App() {
 
   // Set is fetching verse to false when verse is fetched
   React.useEffect(() => {
-    setIsFetchingVerse(false);
+    if (bible.verse != "") setIsFetchingVerse(false);
   }, [bible.verse]);
 
   // Fade in and out the quote box controlled by isFetchingVerse
   React.useEffect(() => {
     const quoteBox = document.getElementById("quote-box");
-    isFetchingVerse
-      ? quoteBox.classList.add("fade")
-      : quoteBox.classList.remove("fade");
+    const shareBtn = document.getElementById("shareBtn");
+    const newVerseBtn = document.getElementById("newVerseBtn");
+    if (isFetchingVerse === true) {
+      quoteBox.classList.add("fade");
+      shareBtn.setAttribute("disabled", true);
+      newVerseBtn.setAttribute("disabled", true);
+    } else if (bible.verse != "") {
+      quoteBox.classList.remove("fade");
+      shareBtn.removeAttribute("disabled");
+      newVerseBtn.removeAttribute("disabled");
+    }
   }, [isFetchingVerse]);
 
   function changeVerse() {
     setRandomContent(books, "bookId");
     setIsFetchingVerse(true);
-    setHighlightedText("");
+    window.getSelection().removeAllRanges();
   }
 
   function changeBibleVersion() {
@@ -136,7 +141,7 @@ function App() {
   }
 
   function handleModal() {
-    modalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
+    shareModalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
   }
 
   async function fetchData(url, options) {
@@ -170,59 +175,6 @@ function App() {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  // Highlighted text functions
-  function getSelectionIndices() {
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    const start = range.startOffset;
-    const end = range.endOffset;
-    return { start, end, length };
-  }
-
-  function handleHighlight(event) {
-    const selection = window.getSelection().toString();
-    if (selection.length > 0) {
-      // Get the mouse coordinates
-      const { clientX, clientY } = getMouserCoordinates();
-      setMouseCoordinates({ clientX, clientY });
-
-      // Get the selection indices
-      const { start, end } = getSelectionIndices();
-      const updatedText = (
-        <React.Fragment>
-          {bible.verse.slice(0, start)}
-          <span className={`highlighted`}>{bible.verse.slice(start, end)}</span>
-          {bible.verse.slice(end)}
-        </React.Fragment>
-      );
-      setHighlightedText(updatedText);
-    }
-  }
-
-  function getMouserCoordinates() {
-    const { clientX, clientY } = event;
-    return { clientX, clientY };
-  }
-
-  function handleColorChange(color) {
-    const highlightedTextElement = document.querySelector(".highlighted");
-    const colorClasses = [
-      "highlight-color-1",
-      "highlight-color-2",
-      "highlight-color-3",
-      "highlight-color-4",
-      "highlight-color-5",
-    ];
-    highlightedTextElement.classList.remove(...colorClasses);
-    highlightedTextElement.classList.add(color);
-    setSubMenuisOpen(false);
-  }
-
-  // Open submenu when there is a highlight
-  React.useEffect(() => {
-    highlightedText != "" ? setSubMenuisOpen(true) : setSubMenuisOpen(false);
-  }, [highlightedText]);
-
   return (
     <div id="main">
       <Header
@@ -230,24 +182,20 @@ function App() {
         bibleVersion={bible.id}
         bibleVersions={bibleVersions}
       />
+
       {!isFetchingBooks ? (
         <div id="quote-box">
-          <div
-            id="canvas"
-            onMouseDown={() => setHighlightedText("")}
-            onMouseUp={handleHighlight}
-          >
-            {bible.verse ? <span className="quote-char">"</span> : null}
-            <div id="text">
-              {highlightedText != "" ? highlightedText : bible.verse}
+          <div id="canvas">
+            <div id="text" ref={verseRef}>
+              {bible.verse}
             </div>
-
             <p id="author">{bible.reference}</p>
           </div>
           {bible.verse ? (
             <div id="button-box">
-              <Button onClick={handleModal} icon={"share-icon"} />
+              <Button id="shareBtn" onClick={handleModal} icon={"share-icon"} />
               <Button
+                id="newVerseBtn"
                 text={
                   bible.id === bibleVersions.KJV
                     ? "New verse"
@@ -270,20 +218,21 @@ function App() {
         </>
       )}
       <ShareModal
+        verseRef={verseRef}
         verse={bible.verse}
         reference={bible.reference}
         handleModal={handleModal}
-        modalIsOpen={modalIsOpen}
+        modalIsOpen={shareModalIsOpen}
       />
-      {subMenuisOpen && (
-        <SelectedTextMenu
-          clientX={mouseCoordinates.clientX}
-          clientY={mouseCoordinates.clientY}
-          handleColorChange={handleColorChange}
-        />
-      )}
+      {!isFetchingBooks ? (
+        <StyleText textRef={verseRef} text={bible.verse} setText={setBible} />
+      ) : null}
       {!isFetchingBooks ? <Footer text={bible.copyright} /> : null}
     </div>
   );
 }
 export default App;
+
+// TODO:
+// 1. Fix share verse.
+// Improve UI.

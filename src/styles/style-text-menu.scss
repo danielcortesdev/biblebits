@@ -1,0 +1,97 @@
+@import "mixins";
+.menu {
+  /* Grid */
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-auto-flow: column;
+  grid-gap: 8px;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 16px;
+  background-color: "";
+  box-shadow: 0px 4px 4px -2px "";
+
+  pointer-events: auto;
+}
+
+.menu-row-1-right {
+  @include grid(5, 1, 8px);
+}
+
+.menu-row-1-center {
+  @include grid(1, 5, 8px);
+}
+
+.menu-row-2-right {
+  @include grid(3, 1, 8px);
+}
+
+.menu-row-2-center {
+  @include grid(1, 3, 8px);
+}
+
+.option-highlight {
+  @include menu-option(
+    hsl(210, 11%, 25%),
+    hsl(210, 11%, 35%),
+    url("/highlighter-solid.svg")
+  );
+}
+
+.option-font-style {
+  @include menu-option(
+    hsl(210, 11%, 25%),
+    hsl(210, 11%, 35%),
+    url("/font-solid.svg")
+  );
+}
+
+.option-clear {
+  @include menu-option(
+    hsl(210, 11%, 25%),
+    hsl(210, 11%, 35%),
+    url("/xmark-solid.svg"),
+    17px
+  );
+}
+
+.option-copy {
+  @include menu-option(
+    hsl(210, 11%, 25%),
+    hsl(210, 11%, 35%),
+    url("/copy-solid.svg"),
+    17px
+  );
+}
+
+.font-option-1 {
+  @include menu-option(
+    hsl(210, 11%, 35%),
+    hsl(210, 11%, 45%),
+    url("/bold-solid.svg"),
+    12px
+  );
+}
+
+.font-option-2 {
+  @include menu-option(
+    hsl(210, 11%, 35%),
+    hsl(210, 11%, 45%),
+    url("/italic-solid.svg"),
+    12px
+  );
+}
+
+.font-option-3 {
+  @include menu-option(
+    hsl(210, 11%, 35%),
+    hsl(210, 11%, 45%),
+    url("/underline-solid.svg"),
+    14px
+  );
+}

@@ -4,6 +4,7 @@ import "../styles/button.scss";
 function Button(props) {
   return (
     <button
+      id={props.id}
       className={props.className ? `button ${props.className}` : "button"}
       onClick={props.onClick}
     >
