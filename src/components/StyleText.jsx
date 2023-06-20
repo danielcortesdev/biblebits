@@ -50,6 +50,8 @@ function StyleText(props) {
 
     textElement.addEventListener("mouseup", handleTextSelection);
     textElement.addEventListener("contextmenu", handleTextSelection);
+    textElement.addEventListener("touchstart", handleMenuVisibility);
+    textElement.addEventListener("touchend", handleMenuVisibility);
 
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
@@ -57,6 +59,8 @@ function StyleText(props) {
 
       textElement.removeEventListener("mouseup", handleTextSelection);
       textElement.removeEventListener("contextmenu", handleTextSelection);
+      textElement.removeEventListener("touchstart", handleMenuVisibility);
+      textElement.removeEventListener("touchend", handleMenuVisibility);
     };
   }, []);
 
@@ -67,6 +71,11 @@ function StyleText(props) {
     if (!menu.contains(target)) {
       setMenuIsOpen(false);
     }
+  }
+
+  function handleMenuVisibility(event) {
+    if (event.type === "touchstart") menuStyle.visibility == "hidden";
+    else if (event.type === "touchend") menuStyle.visibility == "visible";
   }
 
   // Handle text selection
