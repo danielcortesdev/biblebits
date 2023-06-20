@@ -49,14 +49,14 @@ function StyleText(props) {
     window.addEventListener("touchstart", windowCloseMenu);
 
     textElement.addEventListener("mouseup", handleTextSelection);
-    textElement.addEventListener("touchend", handleTextSelection);
+    textElement.addEventListener("contextmenu", handleTextSelection);
 
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
       window.removeEventListener("touchstart", windowCloseMenu);
 
       textElement.removeEventListener("mouseup", handleTextSelection);
-      textElement.removeEventListener("touchend", handleTextSelection);
+      textElement.removeEventListener("contextmenu", handleTextSelection);
     };
   }, []);
 
@@ -99,21 +99,22 @@ function StyleText(props) {
 
     // Prevent selection visual clearing if user clicks it
     event.preventDefault();
-    console.log(event.type)
+    
     if (selectedText.length === 0) {
       // If there's no selection close the menu
       setMenuIsOpen(false);
     } else {
       setMenuIsOpen(true);
       setMouseCoordinates(() => {
-        return event.type != "touchend"
+        console.log(event)
+        return event.type !== "contextmenu"
           ? {
               clientX: event.clientX,
               clientY: event.clientY,
             }
           : {
-              clientX: event.changedTouches[0].clientX,
-              clientY: event.changedTouches[0].clientY,
+              clientX: event.clientX,
+              clientY: event.clientY,
             };
       });
     }
