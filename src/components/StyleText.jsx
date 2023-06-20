@@ -115,7 +115,7 @@ function StyleText(props) {
     } else {
       setMenuIsOpen(true);
       setMouseCoordinates(() => {
-        return event.type != "touchend"
+        return event.type != "contextmenu"
           ? {
               clientX: event.clientX,
               clientY: event.clientY,
