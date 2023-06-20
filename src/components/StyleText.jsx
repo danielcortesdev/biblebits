@@ -49,18 +49,14 @@ function StyleText(props) {
     window.addEventListener("touchstart", windowCloseMenu);
 
     textElement.addEventListener("mouseup", handleTextSelection);
-    textElement.addEventListener("contextmenu", handleTextSelection);
-    textElement.addEventListener("touchstart", handleMenuVisibility);
-    textElement.addEventListener("touchend", handleMenuVisibility);
+    textElement.addEventListener("touchend", handleTextSelection);
 
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
       window.removeEventListener("touchstart", windowCloseMenu);
 
       textElement.removeEventListener("mouseup", handleTextSelection);
-      textElement.removeEventListener("contextmenu", handleTextSelection);
-      textElement.removeEventListener("touchstart", handleMenuVisibility);
-      textElement.removeEventListener("touchend", handleMenuVisibility);
+      textElement.removeEventListener("touchend", handleTextSelection);
     };
   }, []);
 
@@ -71,11 +67,6 @@ function StyleText(props) {
     if (!menu.contains(target)) {
       setMenuIsOpen(false);
     }
-  }
-
-  function handleMenuVisibility(event) {
-    if (event.type === "touchstart") menuStyle.visibility == "hidden";
-    else if (event.type === "touchend") menuStyle.visibility == "visible";
   }
 
   // Handle text selection
@@ -108,14 +99,14 @@ function StyleText(props) {
 
     // Prevent selection visual clearing if user clicks it
     event.preventDefault();
-
+    console.log(event.type)
     if (selectedText.length === 0) {
       // If there's no selection close the menu
       setMenuIsOpen(false);
     } else {
       setMenuIsOpen(true);
       setMouseCoordinates(() => {
-        return event.type != "contextmenu"
+        return event.type != "touchend"
           ? {
               clientX: event.clientX,
               clientY: event.clientY,
