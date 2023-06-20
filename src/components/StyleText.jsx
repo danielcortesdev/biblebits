@@ -47,11 +47,11 @@ function StyleText(props) {
 
     window.addEventListener("mousedown", windowCloseMenu);
     textElement.addEventListener("mouseup", handleTextSelection);
-    textElement.addEventListener("touchend", ()=>handleTextSelection)
+    textElement.addEventListener("touchend", handleTextSelection);
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
       textElement.removeEventListener("mouseup", handleTextSelection);
-      textElement.removeEventListener("touchend", handleTextSelection)
+      textElement.removeEventListener("touchend", handleTextSelection);
     };
   }, []);
 
@@ -82,7 +82,7 @@ function StyleText(props) {
     const endIndex = endRange.toString().length;
 
     const selectedText = selection.toString();
-
+    console.log(startIndex, endIndex);
     // Save it to state and sort the indices to support reverse selection
     let indices = [startIndex, endIndex];
     indices.sort((a, b) => a - b);
@@ -100,9 +100,16 @@ function StyleText(props) {
       setMenuIsOpen(false);
     } else {
       setMenuIsOpen(true);
-      setMouseCoordinates({
-        clientX: event.clientX,
-        clientY: event.clientY,
+      setMouseCoordinates(() => {
+        return event.type != "touchend"
+          ? {
+              clientX: event.clientX,
+              clientY: event.clientY,
+            }
+          : {
+              clientX: event.changedTouches[0].clientX,
+              clientY: event.changedTouches[0].clientY,
+            };
       });
     }
   }
