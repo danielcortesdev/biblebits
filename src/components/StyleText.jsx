@@ -46,10 +46,15 @@ function StyleText(props) {
     const textElement = document.getElementById(props.textRef.current.id);
 
     window.addEventListener("mousedown", windowCloseMenu);
+    window.addEventListener("touchstart", windowCloseMenu);
+
     textElement.addEventListener("mouseup", handleTextSelection);
     textElement.addEventListener("contextmenu", handleTextSelection);
+
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
+      window.removeEventListener("touchstart", windowCloseMenu);
+
       textElement.removeEventListener("mouseup", handleTextSelection);
       textElement.removeEventListener("contextmenu", handleTextSelection);
     };
