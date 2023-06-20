@@ -8,15 +8,23 @@
   width: min-content;
   border: none;
   border-radius: 16px;
-  background-color: $button_background_color;
+  background: linear-gradient(
+    180deg,
+    rgba(226, 234, 252, 1),
+    rgba(204, 218, 250, 1)
+  );
+  box-shadow: 0px 2px 2px 0px rgba(186, 205, 247, 1);
   font-family: $font-family;
   font-size: 16px;
   color: $text_color;
+
+  transition: border-radius 0.3s;
 
   &:active {
     background-color: #c8d6f9;
   }
   &:hover {
+    border-radius: 10px;
     cursor: pointer;
   }
 }

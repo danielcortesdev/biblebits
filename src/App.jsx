@@ -17,6 +17,7 @@ function App() {
     chapterId: "",
     verseId: "",
     verse: "",
+    verseText: "",
     reference: "",
     copyright: "",
   });
@@ -91,6 +92,7 @@ function App() {
                 {char}
               </span>
             )),
+            verseText: cleanVerse,
             reference: verse.reference,
             copyright: verse.copyright,
           };
@@ -140,7 +142,7 @@ function App() {
     });
   }
 
-  function handleModal() {
+  function handleShareModal() {
     shareModalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
   }
 
@@ -193,7 +195,11 @@ function App() {
           </div>
           {bible.verse ? (
             <div id="button-box">
-              <Button id="shareBtn" onClick={handleModal} icon={"share-icon"} />
+              <Button
+                id="shareBtn"
+                onClick={handleShareModal}
+                icon={"share-icon"}
+              />
               <Button
                 id="newVerseBtn"
                 text={
@@ -217,11 +223,11 @@ function App() {
           <p>Siempre lea el contexto del verso</p>
         </>
       )}
+
       <ShareModal
-        verseRef={verseRef}
-        verse={bible.verse}
+        verseText={bible.verseText}
         reference={bible.reference}
-        handleModal={handleModal}
+        handleModal={handleShareModal}
         modalIsOpen={shareModalIsOpen}
       />
       {!isFetchingBooks ? (
