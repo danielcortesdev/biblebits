@@ -240,6 +240,5 @@ function App() {
 export default App;
 
 // TODO:
-// 1. Touch support
-// 2. Fix share verse.
-// 3. Improve UI.
+// 1. Touch support.
+// 2. Improve UI.

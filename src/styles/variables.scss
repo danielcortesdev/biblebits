@@ -1,6 +1,18 @@
-$font-family: 'Noto Serif', serif;
+$font-family: "Noto Serif", serif;
 
-/* Colors */
-$body_background_color_light: #F5F5F5;
+/* Main colors */
+$body_background_color_light: #f5f5f5;
 $text_color: #212529;
-$button_background_color: #E2EAFC;
+$button_background_color: #e2eafc;
+
+/* Highlight colors */
+$highlight_color_1: hsl(62, 77%, 85%);
+$highlight_color_2: hsl(251, 75%, 89%);
+$highlight_color_3: hsl(317, 93%, 94%);
+$highlight_color_4: hsl(202, 76%, 80%);
+$highlight_color_5: hsl(5, 85%, 76%);
+
+/* Menu colors */
+$menu_background_color: hsl(210, 11%, 25%);
+$menu_box_shadow_color: hsl(210, 11%, 45%);
+$submenu_box_shadow_color: hsl(210, 11%, 35%);

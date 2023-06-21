@@ -1,37 +1,63 @@
 @import "mixins";
+@import "variables";
 
-// Highlight submenu options
+// Style submenu options
 .highlight-option-1 {
-  @include menu-option(hsl(62, 77%, 85%), hsl(62, 62%, 85%), "", "", 5%);
+  @include menu-option($highlight_color_1, hsl(62, 62%, 85%), "", "", 5%);
 }
 .highlight-option-2 {
-  @include menu-option(hsl(251, 75%, 89%), hsl(251, 60%, 89%), "", "", 3%);
+  @include menu-option($highlight_color_2, hsl(251, 60%, 89%), "", "", 3%);
 }
 .highlight-option-3 {
-  @include menu-option(hsl(317, 93%, 94%), hsl(317, 78%, 94%), "", "", 2%);
+  @include menu-option($highlight_color_3, hsl(317, 78%, 94%), "", "", 2%);
 }
 .highlight-option-4 {
-  @include menu-option(hsl(202, 76%, 80%), hsl(202, 61%, 80%), "", "", 10%);
+  @include menu-option($highlight_color_4, hsl(202, 61%, 80%), "", "", 10%);
 }
 .highlight-option-5 {
-  @include menu-option(hsl(5, 85%, 76%), hsl(5, 70%, 76%), "", "", 10%);
+  @include menu-option($highlight_color_5, hsl(5, 70%, 76%), "", "", 10%);
+}
+
+.font-option-1 {
+  @include menu-option(
+    $menu_background_color,
+    $menu_box_shadow_color,
+    url("/bold-solid.svg"),
+    12px
+  );
+}
+.font-option-2 {
+  @include menu-option(
+    $menu_background_color,
+    $menu_box_shadow_color,
+    url("/italic-solid.svg"),
+    12px
+  );
+}
+.font-option-3 {
+  @include menu-option(
+    $menu_background_color,
+    $menu_box_shadow_color,
+    url("/underline-solid.svg"),
+    14px
+  );
 }
 
 // Highlight colors
 .color-option-1 {
-  @include color-option(rgb(244, 246, 186));
+  @include color-option($highlight_color_1);
 }
 .color-option-2 {
-  @include color-option(rgb(214, 206, 248));
+  @include color-option($highlight_color_2);
 }
 .color-option-3 {
-  @include color-option(rgb(254, 226, 246));
+  @include color-option($highlight_color_3);
 }
 .color-option-4 {
-  @include color-option(rgb(167, 215, 243));
+  @include color-option($highlight_color_4);
 }
 .color-option-5 {
-  @include color-option(rgb(246, 150, 141));
+  @include color-option($highlight_color_5);
 }
 
 // Font styles

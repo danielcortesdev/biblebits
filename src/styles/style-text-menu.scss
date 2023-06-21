@@ -1,4 +1,6 @@
 @import "mixins";
+@import "variables";
+
 .menu {
   /* Grid */
   display: grid;
@@ -22,76 +24,43 @@
 .menu-row-1-right {
   @include grid(5, 1, 8px);
 }
-
 .menu-row-1-center {
   @include grid(1, 5, 8px);
 }
-
 .menu-row-2-right {
   @include grid(3, 1, 8px);
 }
-
 .menu-row-2-center {
   @include grid(1, 3, 8px);
 }
 
 .option-highlight {
   @include menu-option(
-    hsl(210, 11%, 25%),
-    hsl(210, 11%, 35%),
+    $menu_background_color,
+    $submenu_box_shadow_color,
     url("/highlighter-solid.svg")
   );
 }
-
 .option-font-style {
   @include menu-option(
-    hsl(210, 11%, 25%),
-    hsl(210, 11%, 35%),
+    $menu_background_color,
+    $submenu_box_shadow_color,
     url("/font-solid.svg")
   );
 }
-
 .option-clear {
   @include menu-option(
-    hsl(210, 11%, 25%),
-    hsl(210, 11%, 35%),
+    $menu_background_color,
+    $submenu_box_shadow_color,
     url("/xmark-solid.svg"),
     17px
   );
 }
-
 .option-copy {
   @include menu-option(
-    hsl(210, 11%, 25%),
-    hsl(210, 11%, 35%),
+    $menu_background_color,
+    $submenu_box_shadow_color,
     url("/copy-solid.svg"),
     17px
-  );
-}
-
-.font-option-1 {
-  @include menu-option(
-    hsl(210, 11%, 35%),
-    hsl(210, 11%, 45%),
-    url("/bold-solid.svg"),
-    12px
-  );
-}
-
-.font-option-2 {
-  @include menu-option(
-    hsl(210, 11%, 35%),
-    hsl(210, 11%, 45%),
-    url("/italic-solid.svg"),
-    12px
-  );
-}
-
-.font-option-3 {
-  @include menu-option(
-    hsl(210, 11%, 35%),
-    hsl(210, 11%, 45%),
-    url("/underline-solid.svg"),
-    14px
   );
 }

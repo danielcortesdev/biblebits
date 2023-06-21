@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/header.scss";
-import logo from "/bible_bits_logo.png";
+import logo from "/logo_1.svg";
 import languageIcon from "/language.svg";
 
 function Header(props) {
