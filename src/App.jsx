@@ -242,3 +242,8 @@ export default App;
 // TODO:
 // 1. Touch support.
 // 2. Improve UI.
+
+// Future features:
+// 1. Multiple bible versions
+// 2. Save bible to local storage
+// 3. Save verse to favorites / Local storage

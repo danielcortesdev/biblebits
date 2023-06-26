@@ -9,7 +9,6 @@ function StyleText(props) {
     clientY: 0,
   });
   const [selectedText, setSelectedText] = React.useState({
-    selectedText: "",
     startIndex: 0,
     endIndex: 0,
   });
@@ -46,19 +45,35 @@ function StyleText(props) {
     const textElement = document.getElementById(props.textRef.current.id);
 
     window.addEventListener("mousedown", windowCloseMenu);
-    window.addEventListener("touchstart", windowCloseMenu);
-
     textElement.addEventListener("mouseup", handleTextSelection);
-    textElement.addEventListener("contextmenu", handleTextSelection);
 
+    //TODO: Touch suppport
+    textElement.addEventListener("touchend", handleTextSelection);
+    //textElement.addEventListener("touchstart", testing);
+    textElement.addEventListener("contextmenu", (event) =>
+      event.preventDefault()
+    );
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
-      window.removeEventListener("touchstart", windowCloseMenu);
-
       textElement.removeEventListener("mouseup", handleTextSelection);
-      textElement.removeEventListener("contextmenu", handleTextSelection);
+
+      // TOUCH EVENT
+      textElement.removeEventListener("touchend", handleTextSelection);
+      //textElement.removeEventListener("touchstart", testing);
+      textElement.removeEventListener("contextmenu", (event) =>
+        event.preventDefault()
+      );
     };
   }, []);
+
+  function testing(event) {
+    const selection = window.getSelection();
+    console.log(selection);
+    console.log(event.target);
+
+    //setMenuIsOpen(false);
+    //window.getSelection().removeAllRanges();
+  }
 
   // Close menu if clicked outside of the target
   function windowCloseMenu(event) {
@@ -71,6 +86,40 @@ function StyleText(props) {
 
   // Handle text selection
   function handleTextSelection(event) {
+    if (window.getSelection().toString().length > 0) {
+      const { startIndex, endIndex } = getSelectionIndices();
+
+      setSelectedText({
+        startIndex,
+        endIndex,
+      });
+
+      // Prevent selection visual clearing if user clicks it
+      event.preventDefault();
+
+      setMenuIsOpen(true);
+
+      setMouseCoordinates(() => {
+        console.log(event);
+        console.log(props.textRef.current.getBoundingClientRect().top);
+        if (event.type === "mouseup") {
+          return {
+            clientX: event.clientX,
+            clientY: event.clientY,
+          };
+        } else if (event.type === "touchend") {
+          return {
+            clientX: 20,
+            clientY: props.textRef.current.getBoundingClientRect().top,
+          };
+        }
+      });
+    } else {
+      setMenuIsOpen(false);
+    }
+  }
+
+  function getSelectionIndices() {
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
 
@@ -86,38 +135,14 @@ function StyleText(props) {
     const startIndex = startRange.toString().length;
     const endIndex = endRange.toString().length;
 
-    const selectedText = selection.toString();
-
-    // Save it to state and sort the indices to support reverse selection
+    // Sort indices to support reverse selection
     let indices = [startIndex, endIndex];
     indices.sort((a, b) => a - b);
-    setSelectedText({
-      selectedText,
+
+    return {
       startIndex: indices[0],
       endIndex: indices[1],
-    });
-
-    // Prevent selection visual clearing if user clicks it
-    event.preventDefault();
-    
-    if (selectedText.length === 0) {
-      // If there's no selection close the menu
-      setMenuIsOpen(false);
-    } else {
-      setMenuIsOpen(true);
-      setMouseCoordinates(() => {
-        console.log(event)
-        return event.type !== "contextmenu"
-          ? {
-              clientX: event.clientX,
-              clientY: event.clientY,
-            }
-          : {
-              clientX: event.clientX,
-              clientY: event.clientY,
-            };
-      });
-    }
+    };
   }
 
   /* MENU FUNCTIONS */
@@ -209,10 +234,14 @@ function StyleText(props) {
           });
     }
 
-    if (id === "clear") {
+    if (id === "erase") {
       handleTextStyling("", "");
+    }
+    if (id === "clear") {
+      window.getSelection().removeAllRanges();
       setMenuIsOpen(false);
     }
+
     if (id === "copyToClipboard") {
       const selection = window.getSelection();
       navigator.clipboard.writeText(selection.toString());
@@ -264,6 +293,9 @@ function StyleText(props) {
           ]
         : [...prev, indicesObj];
     });
+
+    // Close menu
+    setMenuIsOpen(false);
   }
 
   // Use Effect to style the text
@@ -352,12 +384,13 @@ function StyleText(props) {
             ></div>
           </div>
         </div>
-        <div id="clear" className="option-clear" onClick={handleMenu}></div>
+        <div id="erase" className="option-erase" onClick={handleMenu}></div>
         <div
           id="copyToClipboard"
           className="option-copy"
           onClick={handleMenu}
         ></div>
+        <div id="clear" className="option-clear" onClick={handleMenu}></div>
       </div>
     </>
   );
@@ -365,16 +398,11 @@ function StyleText(props) {
 
 export default StyleText;
 
-// Flow :
-// 1. User selects text
-// 2. Open menu with options to highlight, copy, fonts, etc.
-// 3. If the user clicks highlight opens submenu with colors
-//    3.1. User selects color
-//    3.2. Highlight text with selected color
-// 4. If the user clicks fonts opens submneu with fonts
-//    4.1. User selects font
-//    4.2. Change font of selected text
-// 5. If user clicks copy copies text to clipboard
+// Touch Flow:
+// 1. El usuario selecciona texto
+//    1.1 Mostar menu.
+//        - Si el usuario selecciona mas texto, ocultar menu.
+//        - Cuando el usuario deje de seleccionar texto, mostart menu otra vez.
 
 // TODO:
 // 3. Touch screen support on Firefox and Safari
