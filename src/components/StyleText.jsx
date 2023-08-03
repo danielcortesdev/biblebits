@@ -51,7 +51,7 @@ function StyleText(props) {
     textElement.addEventListener("touchend", handleTextSelection);
     //textElement.addEventListener("touchstart", testing);
     textElement.addEventListener("contextmenu", (event) =>
-      event.preventDefault()
+      event.preventDefault(),
     );
     return () => {
       window.removeEventListener("mousedown", windowCloseMenu);
@@ -61,19 +61,10 @@ function StyleText(props) {
       textElement.removeEventListener("touchend", handleTextSelection);
       //textElement.removeEventListener("touchstart", testing);
       textElement.removeEventListener("contextmenu", (event) =>
-        event.preventDefault()
+        event.preventDefault(),
       );
     };
   }, []);
-
-  function testing(event) {
-    const selection = window.getSelection();
-    console.log(selection);
-    console.log(event.target);
-
-    //setMenuIsOpen(false);
-    //window.getSelection().removeAllRanges();
-  }
 
   // Close menu if clicked outside of the target
   function windowCloseMenu(event) {
@@ -100,8 +91,6 @@ function StyleText(props) {
       setMenuIsOpen(true);
 
       setMouseCoordinates(() => {
-        console.log(event);
-        console.log(props.textRef.current.getBoundingClientRect().top);
         if (event.type === "mouseup") {
           return {
             clientX: event.clientX,
@@ -207,7 +196,7 @@ function StyleText(props) {
     manualTextSelection(
       props.textRef.current,
       selectedText.startIndex,
-      selectedText.endIndex
+      selectedText.endIndex,
     );
 
     // Submenu open/close
@@ -309,7 +298,7 @@ function StyleText(props) {
       const highlightedText = characters.map((char, charIndex) => {
         const isHighlighted = indicesArr.some(
           ({ startIndex, endIndex }) =>
-            charIndex >= startIndex && charIndex < endIndex
+            charIndex >= startIndex && charIndex < endIndex,
         );
         return isHighlighted ? (
           <span

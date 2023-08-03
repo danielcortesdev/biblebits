@@ -29,15 +29,6 @@
   }
 }
 
-@mixin fade-animation {
-  opacity: 1;
-  transition: opacity 0.5s ease;
-
-  &.fade {
-    opacity: 0;
-  }
-}
-
 @mixin grid($columns, $rows, $gap, $margin-left: 40px) {
   /* GRID */
   display: grid;

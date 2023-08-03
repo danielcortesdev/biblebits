@@ -1,0 +1,59 @@
+.loading-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin loading-ring($border-color, $animation-name) {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+
+  border-radius: 16px;
+  border: 5px solid $border-color;
+
+  animation: $animation-name 2s linear 0s infinite normal;
+}
+
+.loading-ring-one {
+  @include loading-ring(rgba(204, 218, 250, 1), right-rotation);
+}
+
+.loading-ring-two {
+  @include loading-ring(rgba(226, 234, 252, 1), left-rotation);
+}
+
+@keyframes right-rotation {
+  from {
+    transform: rotate(0deg);
+    width: 24px;
+    height: 24px;
+  }
+  50% {
+    width: 32px;
+    height: 32px;
+  }
+  to {
+    transform: rotate(360deg);
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@keyframes left-rotation {
+  from {
+    transform: rotate(360deg);
+    width: 32px;
+    height: 32px;
+  }
+  50% {
+    width: 24px;
+    height: 24px;
+  }
+  to {
+    transform: rotate(0deg);
+    width: 32px;
+    height: 32px;
+  }
+}

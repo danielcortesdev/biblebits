@@ -6,6 +6,8 @@ import {
   EmailShareButton,
   WhatsappShareButton,
 } from "react-share";
+
+// Icons
 import twitterIcon from "/twitter.svg";
 import emailIcon from "/email.svg";
 import whatsappIcon from "/whatsapp.svg";
@@ -48,11 +50,13 @@ function ShareModal(props) {
     <>
       <div
         id="overlay"
-        className={props.modalIsOpen ? "overlay" : "overlay close-overlay"}
-        onClick={props.handleModal}
+        className={props.shareModalIsOpen ? "overlay" : "overlay close-overlay"}
+        onClick={() => props.setShareModalIsOpen(!props.shareModalIsOpen)}
       ></div>
       <div
-        className={props.modalIsOpen ? "share-modal open-modal" : "share-modal"}
+        className={
+          props.shareModalIsOpen ? "share-modal open-modal" : "share-modal"
+        }
       >
         <p className={wasCopied ? "url copied" : "url"}>{url}</p>
         <div id="options-box">

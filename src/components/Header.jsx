@@ -11,11 +11,10 @@ function Header(props) {
       </a>
       <div>
         <p>
-          {
-          props.bibleVersion == props.bibleVersions.KJV 
-          ? "Español"
-          : "English"
-      } </p>
+          {props.bibleVersion == props.bibleVersions.KJV
+            ? "Español"
+            : "English"}{" "}
+        </p>
         <img
           src={languageIcon}
           alt="language icon"
