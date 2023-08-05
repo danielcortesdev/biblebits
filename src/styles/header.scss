@@ -1,14 +1,13 @@
 @import "variables";
+@import "mixins";
 
 header {
+  @include flex($justify: flex-start);
   position: absolute;
   top: 0;
-
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
   width: 100vw;
   max-width: 872px;
+  
   & a {
     text-decoration: none;
     color: $text_color;
@@ -19,9 +18,7 @@ header {
   }
 
   div {
-    display: flex;
-    flex-direction: column;
-
+    @include flex($direction: column);
     padding-top: 24px;
     padding-right: 24px;
     margin-left: auto;

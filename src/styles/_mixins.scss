@@ -1,7 +1,5 @@
 @mixin button-style {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex;
   padding: 16px;
   margin: 0 4px;
   white-space: nowrap;
@@ -30,21 +28,28 @@
 }
 
 @mixin grid($columns, $rows, $gap, $margin-left: 40px) {
-  /* GRID */
   display: grid;
   place-items: start;
   grid-template-columns: repeat($columns, 1fr);
   grid-template-rows: repeat($rows, 1fr);
   grid-gap: $gap;
-
   margin-left: $margin-left;
 }
 
+@mixin flex($direction: row, $wrap: nowrap, $align: center, $justify: center, $gap: 0px) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+  align-items: $align;
+  justify-content: $justify;
+  gap: $gap;
+}
+
 @mixin menu-option(
-  $background-color,
+  $b-color,
   $shadow-color,
-  $background-image: "",
-  $background-size: 18px,
+  $b-image: "",
+  $b-size: 18px,
   $hover-light: 15%
 ) {
   width: 32px;
@@ -53,9 +58,9 @@
   box-shadow: 0px 4px 4px -2px $shadow-color;
 
   /* Background */
-  background-color: $background-color;
-  background-image: $background-image;
-  background-size: $background-size;
+  background-color: $b-color;
+  background-image: $b-image;
+  background-size: $b-size;
   background-position: center;
   background-repeat: no-repeat;
 
@@ -63,7 +68,7 @@
   transition: background-color 0.25s ease-in-out;
 
   &:hover {
-    background-color: lighten($background-color, $hover-light);
+    background-color: lighten($b-color, $hover-light);
     cursor: pointer;
   }
 }

@@ -14,15 +14,10 @@ body {
   background-color: rgb(222, 223, 222);
 }
 
-#main {
+.main {
   height: 100svh;
   padding: 0 32px;
-
-  /* Flex */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  @include flex($direction: column);
 }
 
 @media screen and (max-width: 767px) and (orientation: landscape) {

@@ -1,25 +1,16 @@
 import React from "react";
 import "../styles/header.scss";
 import logo from "/logo_1.svg";
-import languageIcon from "/language.svg";
+import settingsIcon from "/settings-solid.svg";
 
 function Header(props) {
   return (
     <header>
-      <a href="https://www.linkedin.com/in/danielcortesdev/" target="_blank">
+      <a href="https://www.linkedin.com/in/danielcortesdev/" target="_blank" rel="noreferrer">
         <img src={logo} alt="Bible bits logo" />
       </a>
       <div>
-        <p>
-          {props.bibleVersion == props.bibleVersions.KJV
-            ? "Español"
-            : "English"}{" "}
-        </p>
-        <img
-          src={languageIcon}
-          alt="language icon"
-          onClick={props.changeBibleVersion}
-        />
+        <p>settings icon</p>
       </div>
     </header>
   );

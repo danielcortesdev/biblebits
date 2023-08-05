@@ -1,9 +1,4 @@
-.loading-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@import "mixins";
 
 @mixin loading-ring($border-color, $animation-name) {
   position: absolute;
@@ -14,6 +9,11 @@
   border: 5px solid $border-color;
 
   animation: $animation-name 2s linear 0s infinite normal;
+}
+
+.loading-container {
+  position: relative;
+  @include flex;
 }
 
 .loading-ring-one {

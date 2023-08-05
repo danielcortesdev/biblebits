@@ -16,38 +16,23 @@ function App() {
     chapters: [],
     verseId: "",
     verse: "",
+    verseText: "",
     reference: "",
     copyright: "",
   });
   const [shareModalIsOpen, setShareModalIsOpen] = React.useState(false);
 
-  function changeBibleVersion() {
-    setBible((prevBible) => {
-      return {
-        ...prevBible,
-        id:
-          prevBible.id === bibleVersions.KJV
-            ? bibleVersions.RV1909
-            : bibleVersions.KJV,
-      };
-    });
-  }
-
   return (
-    <div id="main">
+    <div id="main" className="main">
       {/* TODO: bibleversions */}
-      <Header
-        bibleVersion={b.id}
-        bibleVersions={"bibleVersions"}
-        changeBibleVersion={changeBibleVersion}
-      />
+      <Header bibleVersion={b.id} />
       <Quote
         b={b}
         setBible={setBible}
         setShareModalIsOpen={setShareModalIsOpen}
       />
       <ShareModal
-        verseText={b.verse}
+        verseText={b.verseText}
         reference={b.reference}
         shareModalIsOpen={shareModalIsOpen}
         setShareModalIsOpen={setShareModalIsOpen}

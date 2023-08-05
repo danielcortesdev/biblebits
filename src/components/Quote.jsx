@@ -56,14 +56,15 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
     if (b.verseId)
       fetchVerse(b.bibleId, b.verseId).then(({ data }) => {
         const { content, reference, copyright } = data;
-        const formatedContent = content
-          .trim()
+        const cleanContent = content.trim();
+        const formatedContent = cleanContent
           .split("")
           .map((char, index) => <span key={index}>{char}</span>);
 
         setBible((prevBible) => ({
           ...prevBible,
           verse: formatedContent,
+          verseText: cleanContent,
           reference,
           copyright,
         }));

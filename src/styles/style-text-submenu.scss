@@ -45,19 +45,19 @@
 
 // Highlight colors
 .color-option-1 {
-  @include color-option($highlight_color_1);
+  background-color: $highlight_color_1;
 }
 .color-option-2 {
-  @include color-option($highlight_color_2);
+  background-color: $highlight_color_2;
 }
 .color-option-3 {
-  @include color-option($highlight_color_3);
+  background-color: $highlight_color_3;
 }
 .color-option-4 {
-  @include color-option($highlight_color_4);
+  background-color: $highlight_color_4;
 }
 .color-option-5 {
-  @include color-option($highlight_color_5);
+  background-color: $highlight_color_5;
 }
 
 // Font styles
