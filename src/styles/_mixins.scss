@@ -1,7 +1,7 @@
 @mixin button-style {
   @include flex;
   padding: 16px;
-  margin: 0 4px;
+  
   white-space: nowrap;
   width: min-content;
   border: none;
@@ -12,7 +12,7 @@
     rgba(204, 218, 250, 1)
   );
   box-shadow: 0px 2px 2px 0px rgba(186, 205, 247, 1);
-  font-family: $font-family;
+  font-family: $noto-serif;
   font-size: 16px;
   color: $text_color;
 
@@ -36,7 +36,13 @@
   margin-left: $margin-left;
 }
 
-@mixin flex($direction: row, $wrap: nowrap, $align: center, $justify: center, $gap: 0px) {
+@mixin flex(
+  $direction: row,
+  $wrap: nowrap,
+  $align: center,
+  $justify: center,
+  $gap: 0px
+) {
   display: flex;
   flex-direction: $direction;
   flex-wrap: $wrap;
@@ -71,6 +77,24 @@
     background-color: lighten($b-color, $hover-light);
     cursor: pointer;
   }
+}
+
+@mixin background-image(
+  $width: 16px,
+  $height: 16px,
+  $url: "",
+  $repeat: no-repeat,
+  $position: center,
+  $size: contain
+) {
+  width: $width;
+  height: $height;
+  @if $url {
+    background-image: url($url);
+  }
+  background-repeat: $repeat;
+  background-position: $position;
+  background-size: $size;
 }
 
 @mixin color-option($background-color) {

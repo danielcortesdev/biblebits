@@ -8,12 +8,15 @@ async function fetchBibles() {
   };
 
   const response = await fetch(
-    `https://api.scripture.api.bible/v1/bibles?language=${"spa"}`,
+    `https://api.scripture.api.bible/v1/bibles`,
     FETCH_OPTIONS,
   );
 
   if (!response.ok) throw new Error("Bibles fetching failed");
-  else return response.json();
+  else {
+    const { data: bibles } = await response.json();
+    return bibles;
+  }
 }
 
 export default fetchBibles;

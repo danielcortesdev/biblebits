@@ -6,16 +6,14 @@ async function fetchVerses(bibleId, chapterId) {
       "api-key": import.meta.env.VITE_API_KEY,
     },
   };
-  
+
   const response = await fetch(
     `https://api.scripture.api.bible/v1/bibles/${bibleId}/chapters/${chapterId}/verses`,
     FETCH_OPTIONS,
   );
 
-  if (!response.ok) {
-    console.error("Fetch verses failed, refetching...");
-    fetchVerses(bibleId, chapterId, FETCH_OPTIONS);
-  } else {
+  if (!response.ok) throw new Error("Verses fetching failed");
+  else {
     const { data } = await response.json();
     return data;
   }

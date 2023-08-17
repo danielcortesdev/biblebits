@@ -1,12 +1,8 @@
 import React from "react";
 import "../styles/footer.scss";
-import languageIcon from "/language.svg";
-function Footer(props) {
-  return (
-    <footer>
-      <p>© {props.text}</p>
-    </footer>
-  );
+
+function Footer({ copyright }) {
+  return <footer>{copyright ? <p>© {copyright}</p> : null}</footer>;
 }
 
 export default Footer;

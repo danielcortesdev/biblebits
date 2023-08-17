@@ -1,5 +1,7 @@
 import React from "react";
 import "../styles/share-modal.scss";
+
+// Components
 import html2canvas from "html2canvas";
 import {
   TwitterShareButton,
@@ -14,7 +16,12 @@ import whatsappIcon from "/whatsapp.svg";
 import imageIcon from "/image-solid.svg";
 import linkIcon from "/link-solid.svg";
 
-function ShareModal(props) {
+function ShareModal({
+  shareModalIsOpen,
+  setShareModalIsOpen,
+  reference,
+  verseText,
+}) {
   const [wasCopied, setWasCopied] = React.useState(false);
   const whatsAppRef = React.useRef();
   const twitterRef = React.useRef();
@@ -45,12 +52,12 @@ function ShareModal(props) {
     html2canvas(canvasElement, options).then((canvas) => {
       const link = document.createElement("a");
       link.href = canvas.toDataURL("image/png"); // File type
-      link.download = props.reference; // File name
+      link.download = reference; // File name
       link.click();
     });
   }
 
-  // Workaround for the react-share buttons click area
+  // Workaround for the react-share buttons clickable area
   function handleButtonClick(ref) {
     ref.current.click();
   }
@@ -59,13 +66,11 @@ function ShareModal(props) {
     <>
       <div
         id="overlay"
-        className={props.shareModalIsOpen ? "overlay" : "overlay close-overlay"}
-        onClick={() => props.setShareModalIsOpen(!props.shareModalIsOpen)}
+        className={shareModalIsOpen ? "overlay" : "overlay close-overlay"}
+        onClick={() => setShareModalIsOpen(!shareModalIsOpen)}
       ></div>
       <div
-        className={
-          props.shareModalIsOpen ? "share-modal open-modal" : "share-modal"
-        }
+        className={shareModalIsOpen ? "share-modal open-modal" : "share-modal"}
       >
         <p className={wasCopied ? "url copied" : "url"}>{url}</p>
         <div className="options-box">
@@ -83,7 +88,7 @@ function ShareModal(props) {
               ref={emailRef}
               url={`\n\n Bible bits: ${url}`}
               subject="I want to share this Bible verse with you"
-              body={`"${props.verseText}" - ${props.reference}`}
+              body={`"${verseText}" - ${reference}`}
               className="share-option-icon"
             >
               <img src={emailIcon} alt="Email icon" />
@@ -96,7 +101,7 @@ function ShareModal(props) {
             <TwitterShareButton
               ref={twitterRef}
               url={`\n\n Bible bits: ${url}`}
-              title={`"${props.verseText}" - ${props.reference}`}
+              title={`"${verseText}" - ${reference}`}
               hashtags={["Bible", "God", "Jesus"]}
               className="share-option-icon"
             >
@@ -110,7 +115,7 @@ function ShareModal(props) {
             <WhatsappShareButton
               ref={whatsAppRef}
               url={`\n\n Bible bits: ${url}`}
-              title={`"${props.verseText}" - ${props.reference}`}
+              title={`"${verseText}" - ${reference}`}
               className="share-option-icon"
             >
               <img src={whatsappIcon} alt="Whatsapp icon" />

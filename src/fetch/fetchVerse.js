@@ -12,10 +12,8 @@ async function fetchVerse(bibleId, verseId) {
     FETCH_OPTIONS,
   );
 
-  if (!response.ok) {
-    console.error("Fetch verse failed, refetching...");
-    fetchVerse(bibleId, verseId, FETCH_OPTIONS);
-  } else return response.json();
+  if (!response.ok) throw new Error("Verse fetcing failed");
+  else return response.json();
 }
 
 export default fetchVerse;

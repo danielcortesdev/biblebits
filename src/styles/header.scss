@@ -1,37 +1,45 @@
 @import "variables";
 @import "mixins";
 
-header {
+.home-header {
   @include flex($justify: flex-start);
   position: absolute;
   top: 0;
   width: 100vw;
   max-width: 872px;
-  
-  & a {
+
+  a {
     text-decoration: none;
     color: $text_color;
-    & img {
+    img {
       padding: 24px;
-      height: 52px;
+      height: 64px;
     }
   }
 
-  div {
-    @include flex($direction: column);
-    padding-top: 24px;
-    padding-right: 24px;
+  .settings-link {
+    height: 24px;
+    width: 24px;
     margin-left: auto;
-    & p {
-      font-size: 12px;
+    margin-right: 24px;
+
+    background-image: url("/settings-solid.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    &:hover {
+      cursor: pointer;
+      animation: rotate 0.5s ease-in-out 0s 1 normal forwards;
     }
-    & img {
-      height: 24px;
-      margin-left: auto;
-      padding-bottom: 16px;
-      &:hover {
-        cursor: pointer;
-      }
-    }
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(45deg);
   }
 }

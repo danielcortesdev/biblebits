@@ -12,12 +12,9 @@ async function fetchChapters(bibleId, bookId) {
     FETCH_OPTIONS,
   );
 
-  if (!response.ok) {
-    console.error("Fetch chapters failed, refetching...");
-    fetchChapters(bibleId, bookId, FETCH_OPTIONS);
-  } else {
+  if (!response.ok) throw new Error("Chapters fetching failed");
+  else {
     const { data } = await response.json();
-    
     return data;
   }
 }

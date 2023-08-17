@@ -14,23 +14,24 @@ import fetchVerses from "../fetch/fetchVerses";
 import fetchVerse from "../fetch/fetchVerse";
 import getRandomItem from "../fetch/getRandomItem";
 
-function Quote({ b, setBible, setShareModalIsOpen }) {
+function Quote({ setShareModalIsOpen, bible, setBible }) {
   const [isLoading, setIsLoading] = React.useState(true);
-  const quoteDivRef = React.useRef();
+  const quoteDivRef = React.useRef(null);
   const verseRef = React.useRef(null);
 
   // Fetch Books and set bookId
   React.useEffect(() => {
-    if (b.bibleId)
-      getId(() => fetchBooks(b.bibleId)).then(({ id, data }) => {
+    if (bible.bibleId) {
+      getId(() => fetchBooks(bible.bibleId)).then(({ id, data }) => {
         setBible((prevBible) => ({ ...prevBible, bookId: id, books: data }));
       });
-  }, [b.bibleId]);
+    }
+  }, [bible.bibleId]);
 
   // Fetch chapters and set chapterId
   React.useEffect(() => {
-    if (b.bookId) {
-      getId(() => fetchChapters(b.bibleId, b.bookId), 1).then(
+    if (bible.bookId) {
+      getId(() => fetchChapters(bible.bibleId, bible.bookId), 1).then(
         ({ id, data }) => {
           setBible((prevBible) => ({
             ...prevBible,
@@ -41,20 +42,26 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
       );
       setIsLoading(true);
     }
-  }, [b.bookId]);
+  }, [bible.bookId]);
 
   // Fetch verses and set verseId
   React.useEffect(() => {
-    if (b.chapterId)
-      getId(() => fetchVerses(b.bibleId, b.chapterId)).then(({ id, data }) => {
-        setBible((prevBible) => ({ ...prevBible, verseId: id, verses: data }));
-      });
-  }, [b.chapterId]);
+    if (bible.chapterId)
+      getId(() => fetchVerses(bible.bibleId, bible.chapterId)).then(
+        ({ id, data }) => {
+          setBible((prevBible) => ({
+            ...prevBible,
+            verseId: id,
+            verses: data,
+          }));
+        },
+      );
+  }, [bible.chapterId]);
 
   // // Fetch verse and set it
   React.useEffect(() => {
-    if (b.verseId)
-      fetchVerse(b.bibleId, b.verseId).then(({ data }) => {
+    if (bible.verseId)
+      fetchVerse(bible.bibleId, bible.verseId).then(({ data }) => {
         const { content, reference, copyright } = data;
         const cleanContent = content.trim();
         const formatedContent = cleanContent
@@ -69,11 +76,11 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
           copyright,
         }));
       });
-  }, [b.verseId]);
+  }, [bible.verseId]);
 
   React.useEffect(() => {
-    if (b.verse) setIsLoading(false);
-  }, [b.verse]);
+    if (bible.verse) setIsLoading(false);
+  }, [bible.verse]);
 
   async function getId(callback, startIndex = 0) {
     const data = await callback();
@@ -82,11 +89,12 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
   }
 
   function changeVerse() {
+    // BUG: sometimes the timeout fails, so it doesn't change the bookId
     setTimeout(() => {
       setBible((prevBible) => ({
         ...prevBible,
-        bookId: b.books.map((book) => book.id)[
-          getRandomIndex(0, b.books.length - 1)
+        bookId: bible.books.map((book) => book.id)[
+          getRandomIndex(0, bible.books.length - 1)
         ],
       }));
     }, 500);
@@ -106,9 +114,9 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
       <div ref={quoteDivRef} className="quote-container fade-in">
         <div id="canvas">
           <div className="verse-text" ref={verseRef} id="verseText">
-            {b.verse}
+            {bible.verse}
           </div>
-          <p className="verse-reference">{b.reference}</p>
+          <p className="verse-reference">{bible.reference}</p>
         </div>
 
         <div className="buttons-container">
@@ -116,11 +124,14 @@ function Quote({ b, setBible, setShareModalIsOpen }) {
             icon={"share-icon"}
             onClick={() => setShareModalIsOpen((prev) => !prev)}
           />
-          <Button text="Nuevo versiculo" onClick={changeVerse} />
+          <Button
+            text={bible.languageId === "SPA" ? "Nuevo Versículo" : "New Verse"}
+            onClick={changeVerse}
+          />
         </div>
       </div>
 
-      <StyleText textRef={verseRef} text={b.verse} setText={setBible} />
+      <StyleText textRef={verseRef} text={bible.verse} setText={setBible} />
     </>
   );
 }

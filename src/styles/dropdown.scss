@@ -1,0 +1,110 @@
+@import "variables";
+@import "mixins";
+
+.dropdown {
+  max-width: 342px;
+  font-size: 16px;
+  position: relative;
+  user-select: none;
+
+  .dropdown-label {
+    position: absolute;
+    top: -13px;
+    left: 16px;
+    padding: 4px;
+    font-size: 12px;
+    background-color: $body_background_color_light;
+  }
+
+  .dropdown-toggle {
+    @include flex($justify: flex-start, $gap: 16px);
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid $menu-background-color;
+    background-color: transparent;
+
+    text-align: left;
+    font-family: $noto-sans;
+    font-size: 16px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .dropdown-icon {
+      @include background-image($width: 24px, $height: 24px, $url: false);
+      flex-shrink: 0;
+    }
+
+    .dropdown-arrow {
+      @include background-image(
+        $width: 16px,
+        $height: 16px,
+        $url: "/angle-down-solid.svg"
+      );
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+  }
+
+  .dropdown-menu {
+    box-sizing: border-box;
+    max-height: 342px;
+    width: 100%;
+    padding: 12px 0px;
+    margin-top: 4px;
+    border: 1px solid $menu-background-color;
+    border-radius: 16px;
+    background-color: $body_background_color_light_shadow;
+    box-shadow: 0px 2px 8px -2px darken($body_background_color_light_shadow, 25%);
+
+    font-family: $noto-sans;
+    position: absolute;
+    z-index: 1;
+    overflow-y: scroll;
+    
+    .dropdown-item {
+      @include flex($justify: flex-start);
+      padding: 16px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: lighten(
+          $color: $body_background_color_light_shadow,
+          $amount: 3%
+        );
+      }
+    }
+  }
+}
+
+.required {
+  border: 1px solid red;
+  border-radius: 16px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.language-icon {
+  background-image: url("/language.svg");
+}
+
+.bible-icon {
+  background-image: url("/book-bible-solid.svg");
+}
+
+.active-arrow {
+  animation: rotate-arrow 0.3s ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes rotate-arrow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}

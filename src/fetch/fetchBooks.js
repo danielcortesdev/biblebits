@@ -12,10 +12,8 @@ async function fetchBooks(bibleId) {
     FETCH_OPTIONS,
   );
 
-  if (!response.ok) {
-    console.error("Fetch books failed, refetching...");
-    fetchBooks(bibleId, FETCH_OPTIONS);
-  } else {
+  if (!response.ok) throw new Error("Books fetching failed");
+  else {
     const { data } = await response.json();
     return data;
   }

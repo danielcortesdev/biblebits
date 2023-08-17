@@ -2,14 +2,19 @@
 import React from "react";
 
 // Components
-import ShareModal from "./components/ShareModal";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Quote from "./components/Quote";
+import Home from "./components/Home";
+import Settings from "./components/Settings";
+import { Routes, Route } from "react-router-dom";
+
+// Context
+import { BibleContext } from "./context";
 
 function App() {
-  const [b, setBible] = React.useState({
+  const [bible, setBible] = React.useState({
+    languageId: "SPA",
+    languageName: "SPA - Español",
     bibleId: "592420522e16049f-01",
+    bibleName: "Reyna Valera 1909",
     bookId: "",
     books: [],
     chapterId: "",
@@ -20,34 +25,14 @@ function App() {
     reference: "",
     copyright: "",
   });
-  const [shareModalIsOpen, setShareModalIsOpen] = React.useState(false);
 
   return (
-    <div id="main" className="main">
-      {/* TODO: bibleversions */}
-      <Header bibleVersion={b.id} />
-      <Quote
-        b={b}
-        setBible={setBible}
-        setShareModalIsOpen={setShareModalIsOpen}
-      />
-      <ShareModal
-        verseText={b.verseText}
-        reference={b.reference}
-        shareModalIsOpen={shareModalIsOpen}
-        setShareModalIsOpen={setShareModalIsOpen}
-      />
-      <Footer text={b.copyright} />
-    </div>
+    <BibleContext.Provider value={{ bible, setBible }}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </BibleContext.Provider>
   );
 }
 export default App;
-
-// TODO:
-// 1. Touch support.
-// 2. Improve UI.
-
-// Future features:
-// 1. Multiple bible versions
-// 2. Save bible to local storage
-// 3. Save verse to favorites / Local storage
