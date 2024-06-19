@@ -1,9 +1,9 @@
 {
-  "name": "random_quote_machine",
+  "name": "biblebits",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://danielcortes.tech",
+  "homepage": "https://danielcortes.me",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
