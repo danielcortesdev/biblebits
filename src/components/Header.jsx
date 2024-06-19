@@ -13,7 +13,6 @@ function Header() {
       >
         <img src={logo} alt="Bible bits logo" />
       </a>
-      {/* The realoadDocument avoids that when returning Home it makes multiple request to the API*/}
       <Link to="/settings" className="settings-link"></Link>
     </header>
   );
