@@ -24,9 +24,9 @@ const queryClient = new QueryClient({
 const root = createRoot(document.getElementById("root"));
 root.render(
   <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
-  </QueryClientProvider>,
+  </QueryClientProvider>
 );
